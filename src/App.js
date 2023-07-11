@@ -1,28 +1,44 @@
-import React from 'react';
-import Header from "./components/Header";
-import {Routes,Route,useRoutes} from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import Courses from './components/Courses';
-import MainCourse from './components/MainCourse';
-import About from './components/About';
-import routes from './components/routes';
-function App() {
-  let router=useRoutes(routes)
+import React, { useState } from "react";
+import Navbar from "./Components/Navbar/Navbar";
+import ProductsSection from "./Components/ProductsSection/ProductsSection";
+import Toast from "./Components/Toast/Toast";
+
+import productsContext from "./Contexts/ProductsContext";
+
+import "./App.css";
+
+import products from "./data/products";
+import Cart from "./Components/Cart/Cart";
+
+export default function App() {
+  const [allProducts, setAllProducts] = useState(products);
+  const [userCart, setUserCart] = useState([])
+  const [isShowToast, setIsShowToast] = useState(false)
+  const [isShowCart, setIsShowCart] = useState(false)
+
   return (
-    <>
-    <Header/>
-    {router}
-    {/* <Routes>
-      <Route path='/courses' element={<Courses/>}/>
-      <Route path='/course/:courseID' element={<MainCourse/>}/>
-      <Route path='/about' element={<About/>}/>
-      <Route path='/about/*' element={<About/>}>
-            <Route path="setting" element={<p style={{textAlign:"center"}}> this is setting</p>}></Route>
-            <Route path="dashboard" element={<p style={{textAlign:"center"}}> this is dashboard</p>}></Route>
-      </Route>
-    </Routes> */}
-    </>
+    <div>
+      <productsContext.Provider value={{
+        allProducts,
+        userCart,
+        setUserCart,
+        isShowToast,
+        setIsShowToast,
+        isShowCart,
+        setIsShowCart
+      }}>
+        <Navbar />
+
+        <main className="pb-5">
+          <div className="container">
+            <h1 className="text-center main-title">All Products</h1>
+              <ProductsSection />
+          </div>
+        </main>
+        <Toast />
+
+        <Cart />
+      </productsContext.Provider>
+    </div>
   );
 }
-
-export default App;

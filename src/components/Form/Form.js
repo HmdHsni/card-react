@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Form.css";
 
 export default function Form() {
@@ -6,6 +6,7 @@ export default function Form() {
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
     const [email, setEmail] = useState('')
+    const [users, setUsers] = useState([])
 
     const registerHandler = event => {
         event.preventDefault()
@@ -16,7 +17,7 @@ export default function Form() {
             email
         }
 
-        fetch('https://sabzlearn-f3a8d-default-rtdb.firebaseio.com/users.json', {
+        fetch('https://sabzlearn-3f278-default-rtdb.firebaseio.com/users.json', {
             method: 'POST',
             body: JSON.stringify(userInfo)
         }).then(response => console.log(response))
